@@ -7,6 +7,8 @@ The aim of our project is to uncover trends in weather patterns recorded at airp
 
 Link to Dataset: https://www.kaggle.com/datasets/sobhanmoosavi/us-weather-events/data 
 
+![Alt text](<Screenshot 2023-10-02 at 8.28.05 PM.png>)
+
 ## **Milestones**
 * Project Ideation
 * Data fetching/API Integration
