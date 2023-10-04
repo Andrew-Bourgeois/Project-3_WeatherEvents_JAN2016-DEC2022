@@ -40,7 +40,8 @@ def weatherdata():
     session = Session(engine)
 
     # query for all the station data
-    results = session.query(WeatherData.EventId, WeatherData.Type, WeatherData.Severity, WeatherData.StartTime, WeatherData.EndTime, WeatherData.Precipitation, WeatherData.TimeZone, WeatherData.AirportCode, WeatherData.LocationLat, WeatherData.LocationLng, WeatherData.City, WeatherData.County, WeatherData.State, WeatherData.ZipCode).filter(WeatherData.Type == 'Storm').all()
+    results = session.query(
+        WeatherData.EventId, WeatherData.Type, WeatherData.Severity, WeatherData.StartTime, WeatherData.EndTime, WeatherData.Precipitation, WeatherData.TimeZone, WeatherData.AirportCode, WeatherData.LocationLat, WeatherData.LocationLng, WeatherData.City, WeatherData.County, WeatherData.State, WeatherData.ZipCode).filter(WeatherData.Type == 'Storm').all()
 
     # results = session.query(WeatherData.EventId, WeatherData.Type).filter(WeatherData.StartTime >= 2022-1-1).all()
 
