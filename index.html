@@ -1,1 +1,58 @@
 <!-- This is where out html will go-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>US Severe Storms: 2016 - 2022</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- The div that holds the map-->
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+    <!-- D3 JavaScript -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Our JavaScript -->
+    <script type="text/javascript" src="static/js/logic.js"></script>
+
+    <!-- EXTRA JS PLUGIN, MARKERS MAYBE? -->
+
+    <!-- <div class="container">
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+                <h1>US Severe Storm: 2016-2022 Dashboard</h1>
+                <p>Use the interactive visualizations below to explore the data.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="well">
+                    <h5>Test Subject ID No.:</h5>
+                    <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                </div>
+                <div class="panel panel-primary">
+                    <div clas="panel panel-heading">
+                        <h3 class="panel-title">??SOME SORT OF DATA??</h3>
+                    </div>
+                    <div id="sample-metadata" class="panel-body" style="word-wrap: normal">
+                    </div>
+                </div>"
+            </div>            
+        </div>
+    </div> -->
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="./static/js/app.js"></script>
+    <!-- <script src="./static/js/bonus.js"></script> EXTRA JS PLUGIN, MARKERS MAYBE?-->
+</body>
