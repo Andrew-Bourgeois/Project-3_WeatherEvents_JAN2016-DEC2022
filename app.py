@@ -3,7 +3,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 #################################################
 # Database Setup
@@ -31,6 +31,9 @@ app = Flask(__name__)
 # Flask Routes
 #################################################
 
+@app.route("/")
+def index():
+    return render_template('index.html')
 
 @app.route("/api/v1.0/weatherdata")
 def weatherdata():

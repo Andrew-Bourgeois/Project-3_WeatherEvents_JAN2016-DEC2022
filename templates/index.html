@@ -14,16 +14,12 @@
     <!-- The div that holds the map-->
     <div id="map"></div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-        crossorigin=""></script>
-
-    <!-- D3 JavaScript -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <!-- Our JavaScript -->
-    <script type="text/javascript" src="static/js/logic.js"></script>
+    <form>
+        Latitude (S-N):  <input type="number" min="25" max="50" value="25" id="latS"><input type="number" min="25" max="50" value="50" id="latN">
+        Longitude (W-E): <input type="number" min="-125" max="-65" value="-125" id="lonW"><input type="number" min="-125" max="-65" value="-65" id="lonE">
+        Date (start-end): <input type="text" value="2016-01" id="startDate"><input type="text" value="2023-01" id="endDate">
+    </form>
+    <button id="button">Enter</button>
 
     <!-- Plotly Library -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -58,8 +54,16 @@
         </div>
     </div> -->
 
-    <!-- <script src="https://d3js.org/d3.v7.min.js"></script>
-
-    <script src="./static/js/app.js"></script>
-    <script src="./static/js/bonus.js"></script> EXTRA JS PLUGIN, MARKERS MAYBE?-->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <script type="text/javascript" src="static/js/logic.js"></script>
 </body>
+
+</html>
