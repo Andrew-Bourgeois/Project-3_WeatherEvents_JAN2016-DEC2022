@@ -4,6 +4,9 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from flask import Flask, jsonify, render_template
+from flask_cors import CORS, cross_origin
+
+
 
 #################################################
 # Database Setup
@@ -26,12 +29,14 @@ session = Session(engine)
 # Flask Setup
 #################################################
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 #################################################
 # Flask Routes
 #################################################
 
 @app.route("/")
+@cross_origin(supports_credentials=True)
 def index():
     return render_template('index.html')
 
