@@ -1,14 +1,14 @@
 
 
 const url = "http://127.0.0.1:5000/api/v1.0/weatherdata"
-let latS = 25;
-let latN = 50;
-let lonW = -125;
-let lonE = -65;
-let startDate = '2016-01';
-let endDate = '2023-01';
+var latS = 25;
+var latN = 50;
+var lonW = -125;
+var lonE = -65;
+var startDate = '2016-01';
+var endDate = '2023-01';
 
-let weatherJson;
+var weatherJson;
 
 function filterDate(storm){
     const date = new Date(storm.starttime);           
@@ -17,7 +17,7 @@ function filterDate(storm){
     return date > startDate && date < endDate;
 };
 
-d3.select('button').on('click',function(){
+d3.select('button').on('click', function () {
     d3.select("#latS").on("input", function() {
         latS = this.value;
     })
@@ -49,28 +49,28 @@ function run(dataset) {
     createMarkers(weatherJson);
 
 };
-// ************************ Code for Leaflet Map ***********************
+// ************************ Code for Leaflet Map ****************************
 /*
     * Create the base map with GoogleStreet map and Satellite map
     * Using resulting 'weatherJson' JSON object from the picker selection:
-        - create new JSON grouped by airport codes
-        - count number of storms for each airport
-        - create new column calculating duration of each storm
-        - create color choosing function to be used with marker creation
+        - create new JSON grouped by airport codes - COMPLETE
+        - count number of storms for each airport - COMPLETE
+        - create new column calculating duration of each storm - COMPLETE
+        - create color choosing function to be used with marker creation  - COMPLETE
         - create marker for each airport
-            > Use color for each marker to show number of storms
-            > Use average duration of storms to determine scale of marker
-            > Use lat, lon data for marker location
-            > create 'tooltip'/'hover over data'
-        - Hover over data will include:
+            > Use color for each marker to show number of storms - COMPLETE
+            > Use average duration of storms to determine scale of marker - COMPLETE
+                o create radius min/max limiting function for markers - COMPLETE
+            > Use lat, lon data for marker location - COMPLETE
+            > create 'tooltip'/'popup data' -COMPLETE
+        - Popup data will include: - COMPLETE
             > Airport ID code
             > # of storms
             > location: (lat, lon)
             > City, State, Zip
 */
 
-
-// --------------------- create the base layers ---------------------------------------
+// --------------------- create the base layers --------------------------------
 // create street map base layer
 let googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     maxZoom: 20,
@@ -99,8 +99,9 @@ let myMap = L.map("map", {
     zoom: 5,
     layers: [googleStreets],
 });
+// --------------------------------------------------------------------------
 
-// Create a layer control.
+// ----------------------- Create a layer control ---------------------------
 // Pass it our baseMaps and overlayMaps.
 // Add the layer control to the map.
 L.control.layers(baseMaps).addTo(myMap);
@@ -108,9 +109,9 @@ L.control.layers(baseMaps).addTo(myMap);
 function createMarkers(data) {
     // create durations
     for (let e = 0; e < data.length; e++) {
-        let event = data[e];
-        let end = new Date(event.endtime);
-        let start = new Date(event.starttime);
+        var event = data[e];
+        var end = new Date(event.endtime);
+        var start = new Date(event.starttime);
         event["duration"] = end - start;
     };
     
@@ -124,34 +125,33 @@ function createMarkers(data) {
 
     // use data for each feature to create a new
     createFeature(groupByAPCode);
-}
+};
+// --------------------------------------------------------------------------
 
-// function to create marker features
+// -------------- function to create marker features ------------------------
 function createFeature(apData) {
     // create an array fo string keys for the brouped by object
     const arrayOfKeys = Object.keys(apData).map(key => key);
     console.log(arrayOfKeys);
-    // console.log(apData[arrayOfKeys[0]]);
 
+    // loop through grouped JSON using array of keys for reference
     for (key of arrayOfKeys) {
-        // console.log(apData[key]);
         data = apData[key];
-        // console.log(data);
-        let ap = data[0];
-        // console.log(ap);
-        let apID = ap.airportcode;
-        let avgDuration = data.reduce((acc, doc) => {
+        var ap = data[0];
+        var apID = ap.airportcode;
+        // calculate the average duration of storms
+        var avgDuration = data.reduce((acc, doc) => {
              acc += doc.duration;
              return acc;
          }, 0) / data.length;
-        let location = [ap.lat, ap.lon];
-        let city = ap.city;
-        let state = ap.state;
-        let zip = ap.zipcode;
-        let numStorms = data.length;
+        var location = [ap.lat, ap.lon];
+        var city = ap.city;
+        var state = ap.state;
+        var zip = ap.zipcode;
+        var numStorms = data.length;
 
         // // choose color for marker based on number of storms
-        let color = chooseColor(numStorms);
+        var color = chooseColor(numStorms);
 
         // // add circles to map
         L.circle(location, {
@@ -161,11 +161,14 @@ function createFeature(apData) {
             weight: 0.5,
             //adjust radius
             radius: getRadius(avgDuration)
-        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(myMap);
+        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(myMap);
     };
 }
+// --------------------------------------------------------------------------
 
-// function to limit radius size
+// ------------- function to limit radius size ------------------------------
+// otherwise some storms last so long they cover the whole map.
+// or are so short they barely show up
 function getRadius(duration) {
     check = duration / 100;
     if (check >= 65000) {
@@ -177,14 +180,15 @@ function getRadius(duration) {
     else {
         return check;
     }
-}
+};
+// --------------------------------------------------------------------------
 
-// function to count # of JSON elements by keys
+// ----------- function to count # of JSON elements by keys -----------------
 function countObjectKeys(obj) {
     return Object.keys(obj).length;
-}
+};
 
-// function to choose marker color
+// ------------------ function to choose marker color -----------------------
 function chooseColor(stormCount) {
     let color = "";
     if (stormCount >= 500) {
@@ -207,3 +211,27 @@ function chooseColor(stormCount) {
     }
     return color;
 };
+// --------------------------------------------------------------------------
+
+// // function to create legend
+// function createLegend() {
+//     let legend = l.control({
+//         position: "bottomright"
+//     });
+
+//     legend.onAdd = () => {
+//         var div = l.DomUtil.create("div", "legend");
+//         labels = ['<strong># of Storms</strong>'],
+//         colors = ['#000000', '#fc4653', '#faa921', '#f4d612', '#d5f70a', '#96f909'],
+//         categories = ['500+', '200-500', '100-200', '25-100', '10-25', '<10'];
+            
+//         for (let i = 0; i < categories.length; i++) {
+//             labels.push(
+//                 <i class="legendcolor" style=
+//             )
+//         }
+        
+//     }
+// }
+
+// *************************** End of Map Code ******************************
