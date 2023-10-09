@@ -33,3 +33,6 @@ Using the knowledge and techniques we have laerned thus far, create a small full
 * using Google Maps for base layers: https://stackoverflow.com/questions/9394190/leaflet-map-api-with-google-satellite-layer 
 * resolving CORS, cross origin errors when running flask and index.html: UNC-CH-DA Flask channel solution provided by Aubrey Leary
 * function for array count: https://amiyasahu.github.io/count-object-key-value-pairs-in-json.html#:~:text=To%20count%20the%20number%20key,pairs%20in%20the%20json%20object.
+* how to add and remove a marker feature layer to update upon event:
+    * https://gis.stackexchange.com/questions/258929/add-layers-to-a-feature-group-with-a-function-loop 
+    * https://gis.stackexchange.com/questions/169388/how-to-remove-marker-added-map-with-addto-function-in-leaflet
