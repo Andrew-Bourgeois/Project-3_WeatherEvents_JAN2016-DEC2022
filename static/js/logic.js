@@ -154,7 +154,7 @@ function createFeature(apData) {
         var color = chooseColor(numStorms);
 
         // // add circles to map
-        L.circle(location, {
+        marker = L.circle(location, {
             fillColor: color,
             fillOpacity: 0.9,
             color: color,
