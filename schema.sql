@@ -18,9 +18,12 @@ CREATE TABLE IF NOT EXISTS weather_1622 (
  PRIMARY KEY(Eventid)
 );
 
+-- Verify table creation and count initiial number of records
+SELECT COUNT(Eventid) FROM weather_1622;
+
 -- Remove records with NULL values
 DELETE FROM weather_1622
 WHERE not (weather_1622 is NOT NULL);
 
--- Verify table creation
+-- Verify table update with new count
 SELECT COUNT(Eventid) FROM weather_1622;
