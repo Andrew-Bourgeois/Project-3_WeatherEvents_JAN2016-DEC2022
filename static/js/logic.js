@@ -135,6 +135,7 @@ function createMarkers(data) {
 
     // use data for each feature to create a new
     createFeature(groupByAPCode);
+    createLegend(myMap);
 };
 // --------------------------------------------------------------------------
 
@@ -142,7 +143,6 @@ function createMarkers(data) {
 function createFeature(apData) {
     // create an array fo string keys for the brouped by object
     const arrayOfKeys = Object.keys(apData).map(key => key);
-    console.log(arrayOfKeys);
 
     //clear and update marker group
     myMap.removeLayer(markerGroup);
@@ -228,25 +228,30 @@ function chooseColor(stormCount) {
 };
 // --------------------------------------------------------------------------
 
-// // function to create legend
-// function createLegend() {
-//     let legend = l.control({
-//         position: "bottomright"
-//     });
+// ---------------------- function to create legend -------------------------
+function createLegend(map) {
+    let legend = L.control({
+        position: "bottomright"
+    });
 
-//     legend.onAdd = () => {
-//         var div = l.DomUtil.create("div", "legend");
-//         labels = ['<strong># of Storms</strong>'],
-//         colors = ['#000000', '#fc4653', '#faa921', '#f4d612', '#d5f70a', '#96f909'],
-//         categories = ['500+', '200-500', '100-200', '25-100', '10-25', '<10'];
+    legend.onAdd = () => {
+        var div = L.DomUtil.create("div", "legend");
+        labels = ['<strong># of Storms</strong>'],
+            colors = ['#000000', '#fc4653', '#faa921', '#f4d612', '#d5f70a', '#96f909'],
+            categories = ['500+', '200-500', '100-200', '25-100', '10-25', '<10'];
             
-//         for (let i = 0; i < categories.length; i++) {
-//             labels.push(
-//                 <i class="legendcolor" style=
-//             )
-//         }
+        for (let i = 0; i < categories.length; i++) {
+            labels.push(
+                `<i class="colorsquare" style="
+                background: ${colors[i]}"></i> ${categories[i]}`
+            );
+        }
+        div.innerHTML = labels.join('<br>');
+        return div;
         
-//     }
-// }
+    };
+    legend.addTo(map);
+};
+// --------------------------------------------------------------------------
 
 // *************************** End of Map Code ******************************
