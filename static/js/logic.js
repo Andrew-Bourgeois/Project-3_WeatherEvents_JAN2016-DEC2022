@@ -9,6 +9,7 @@ var startDate = '2016-01';
 var endDate = '2023-01';
 
 var weatherJson;
+var markerGroup = L.featureGroup();
 
 function filterDate(storm){
     const date = new Date(storm.starttime);           
@@ -36,14 +37,23 @@ d3.select('button').on('click', function () {
     d3.select("#endDate").on("input", function() {
         endDate = this.value;
     })
+    //Filter and update map
+    let filteredWeather = filterJson(weatherJson);
+    console.log(filteredWeather);
+    createMarkers(filteredWeather);
 })
+
+function filterJson(json){//,latS,latN,lonE,lonW){
+    let filteredWeather = json.filter(storm => ((storm.lat > latS) && (storm.lat < latN) && (storm.lon < lonE) && (storm.lon > lonW))).filter(filterDate);
+    return(filteredWeather)
+}
 
 
 d3.json(url).then(run);
 
 function run(dataset) {
-    weatherJson = dataset.filter(storm => ((storm.lat > latS) && (storm.lat < latN) && (storm.lon < lonE) && (storm.lon > lonW))).filter(filterDate);
-    console.log(weatherJson);
+    weatherJson = dataset;
+    let filteredWeather = filterJson(weatherJson);
 
     // creating Markers for map
     createMarkers(weatherJson);
@@ -134,6 +144,10 @@ function createFeature(apData) {
     const arrayOfKeys = Object.keys(apData).map(key => key);
     console.log(arrayOfKeys);
 
+    //clear and update marker group
+    myMap.removeLayer(markerGroup);
+    markerGroup = L.featureGroup();
+
     // loop through grouped JSON using array of keys for reference
     for (key of arrayOfKeys) {
         data = apData[key];
@@ -161,8 +175,9 @@ function createFeature(apData) {
             weight: 0.5,
             //adjust radius
             radius: getRadius(avgDuration)
-        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(myMap);
+        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(markerGroup);
     };
+    myMap.addLayer(markerGroup);
 }
 // --------------------------------------------------------------------------
 
