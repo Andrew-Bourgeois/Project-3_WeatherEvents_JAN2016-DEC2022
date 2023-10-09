@@ -53,10 +53,10 @@ d3.json(url).then(run);
 
 function run(dataset) {
     weatherJson = dataset;
-    let filteredWeather = filterJson(weatherJson);
 
     // creating Markers for map
     createMarkers(weatherJson);
+    createLegend(myMap);
 
 };
 // ************************ Code for Leaflet Map ****************************
@@ -80,7 +80,7 @@ function run(dataset) {
             > City, State, Zip
 */
 
-// --------------------- create the base layers --------------------------------
+// --------------------- create the base layers -----------------------------
 // create street map base layer
 let googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     maxZoom: 20,
@@ -109,6 +109,7 @@ let myMap = L.map("map", {
     zoom: 5,
     layers: [googleStreets],
 });
+
 // --------------------------------------------------------------------------
 
 // ----------------------- Create a layer control ---------------------------
@@ -135,7 +136,6 @@ function createMarkers(data) {
 
     // use data for each feature to create a new
     createFeature(groupByAPCode);
-    createLegend(myMap);
 };
 // --------------------------------------------------------------------------
 
@@ -170,9 +170,9 @@ function createFeature(apData) {
         // // add circles to map
         marker = L.circle(location, {
             fillColor: color,
-            fillOpacity: 0.9,
+            fillOpacity: 0.65,
             color: color,
-            weight: 0.5,
+            weight: 3.0,
             //adjust radius
             radius: getRadius(avgDuration)
         }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(markerGroup);
@@ -237,8 +237,8 @@ function createLegend(map) {
     legend.onAdd = () => {
         var div = L.DomUtil.create("div", "legend");
         labels = ['<strong># of Storms</strong>'],
-            colors = ['#000000', '#fc4653', '#faa921', '#f4d612', '#d5f70a', '#96f909'],
-            categories = ['500+', '200-500', '100-200', '25-100', '10-25', '<10'];
+        colors = ['#000000', '#fc4653', '#faa921', '#f4d612', '#d5f70a', '#96f909'],
+        categories = ['500+', '200-500', '100-200', '25-100', '10-25', '<10'];
             
         for (let i = 0; i < categories.length; i++) {
             labels.push(
