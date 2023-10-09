@@ -10,6 +10,20 @@ var endDate = '2023-01';
 
 var weatherJson;
 var markerGroup = L.featureGroup();
+var stormCounts = [];
+var summaryStats ={
+    dMax:0,
+    nMax:0,
+    dMin:0,
+    nMin:0,
+    dMean:0,
+    nMean:0,
+    dMedian:0,
+    nMedian:0,
+    dStd:0,
+    nStd:0
+};
+
 
 function filterDate(storm){
     const date = new Date(storm.starttime);           
@@ -57,6 +71,13 @@ function run(dataset) {
     // creating Markers for map
     createMarkers(weatherJson);
     createLegend(myMap);
+
+    calcStats(weatherJson);
+    console.log(summaryStats);
+    //let negative = weatherJson.filter(storm => storm.duration < 0);
+    //let nDate = new Date(negative[0].endtime);
+    //let sDate = negative[0].starttime;
+    console.log(stormCounts);
 
 };
 // ************************ Code for Leaflet Map ****************************
@@ -148,6 +169,7 @@ function createFeature(apData) {
     myMap.removeLayer(markerGroup);
     markerGroup = L.featureGroup();
 
+    stormCounts = [];
     // loop through grouped JSON using array of keys for reference
     for (key of arrayOfKeys) {
         data = apData[key];
@@ -163,6 +185,9 @@ function createFeature(apData) {
         var state = ap.state;
         var zip = ap.zipcode;
         var numStorms = data.length;
+
+        //create counts for summary stats
+        stormCounts.push(numStorms);
 
         // // choose color for marker based on number of storms
         var color = chooseColor(numStorms);
@@ -255,3 +280,17 @@ function createLegend(map) {
 // --------------------------------------------------------------------------
 
 // *************************** End of Map Code ******************************
+
+function calcStats(weatherData){
+    let durations = weatherData.map(storm => storm.duration / 60000);//convert to minutes
+    summaryStats['dMax'] = d3.max(durations);
+    summaryStats['dMin'] = d3.min(durations);
+    summaryStats['dMean'] = d3.mean(durations);
+    summaryStats['dMedian'] = d3.median(durations);
+    summaryStats['dStd'] = d3.deviation(durations);
+    summaryStats['nMax'] = d3.max(stormCounts);
+    summaryStats['nMin'] = d3.min(stormCounts);
+    summaryStats['nMean'] = d3.mean(stormCounts);
+    summaryStats['nMedian'] = d3.median(stormCounts);
+    summaryStats['nStd'] = d3.deviation(stormCounts);
+}
