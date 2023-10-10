@@ -36,8 +36,8 @@
         Latitude (S-N):  <input type="number" min="25" max="50" value="25" id="latS"><input type="number" min="25" max="50" value="50" id="latN">
         Longitude (W-E): <input type="number" min="-125" max="-65" value="-125" id="lonW"><input type="number" min="-125" max="-65" value="-65" id="lonE">
         Date (start-end): <input type="text" value="2016-01" id="startDate"><input type="text" value="2023-01" id="endDate">
-        <button id="button">Enter</button>
     </form>
+    <button id="button">Enter</button>
 
     <div class="col-md-12">
         <div id="histogram"></div>
@@ -49,23 +49,28 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <div class="panel panel-primary">
                     <div clas="panel panel-heading">
-                        <h3 class="panel-title">Summary Statistics</h3>
+                        <h3 class="panel-title">Storm Duration (Minutes)</h3>
                     </div>
-                    <div id="summary-stats" class="panel-body" style="word-wrap: normal">
+                    <div id="summary-stats1" class="panel-body" style="word-wrap: normal">
                     </div>
                 </div>
-            </div>            
+            </div>   
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div clas="panel panel-heading">
+                        <h3 class="panel-title">Count by Airport</h3>
+                    </div>
+                    <div id="summary-stats2" class="panel-body" style="word-wrap: normal">
+                    </div>
+                </div>
+            </div>          
         </div>
     </div>
     
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/prop-types/prop-types.min.js"></script>
-    <script src="https://unpkg.com/recharts/umd/Recharts.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
     crossorigin=""></script>

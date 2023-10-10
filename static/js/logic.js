@@ -59,6 +59,7 @@ d3.select('button').on('click', function () {
     createMarkers(filteredWeather);
     getDates(filteredWeather);
     plotHist();
+    calcStats(filteredWeather);
 })
 
 function filterJson(json){//,latS,latN,lonE,lonW){
@@ -301,6 +302,19 @@ function calcStats(weatherData){
     summaryStats['nMean'] = d3.mean(stormCounts);
     summaryStats['nMedian'] = d3.median(stormCounts);
     summaryStats['nStd'] = d3.deviation(stormCounts);
+    let table1 = d3.select('#summary-stats');
+    d3.select('#summary-stats1').selectAll('p').remove();
+    d3.select('#summary-stats1').append('p').text(`Max: ${summaryStats.dMax}`);
+    d3.select('#summary-stats1').append('p').text(`Min: ${summaryStats.dMin}`);
+    d3.select('#summary-stats1').append('p').text(`Mean: ${Math.round(summaryStats.dMean)}`);
+    d3.select('#summary-stats1').append('p').text(`Median: ${summaryStats.dMedian}`);
+    d3.select('#summary-stats1').append('p').text(`SD: ${Math.round(summaryStats.dStd)}`);
+    d3.select('#summary-stats2').selectAll('p').remove();
+    d3.select('#summary-stats2').append('p').text(`Max: ${summaryStats.nMax}`);
+    d3.select('#summary-stats2').append('p').text(`Min: ${summaryStats.nMin}`);
+    d3.select('#summary-stats2').append('p').text(`Mean: ${Math.round(summaryStats.nMean)}`);
+    d3.select('#summary-stats2').append('p').text(`Median: ${summaryStats.nMedian}`);
+    d3.select('#summary-stats2').append('p').text(`SD: ${Math.round(summaryStats.nStd)}`);
 }
 
 
