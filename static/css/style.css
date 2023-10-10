@@ -10,13 +10,13 @@ html {
 
 #form-input {
   height: 65px;
-  width: 500px;
+  width: 100%;
 }
 
 #map {
-  height: 75%;
+  height: 90%;
   width: 100%;
-  padding: 0;
+  padding: 200px;
   margin: 0;
 
 }

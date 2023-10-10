@@ -331,6 +331,15 @@ function plotHist(){
         x: plotDates,
         y: plotValues,
         type: 'bar'
-    }]
-    Plotly.newPlot("histogram",trace)
+    }];
+
+    let layoutBar = {
+        title: "Number of Storms per Year-Month",
+        margin: {
+            t: 50,
+            b: 40
+        }
+    };
+
+    Plotly.newPlot("histogram", trace, layoutBar);
 }
