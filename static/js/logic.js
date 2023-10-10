@@ -23,7 +23,9 @@ var summaryStats ={
     dStd:0,
     nStd:0
 };
-
+var dateArray={};
+var plotDates;
+var plotValues;
 
 function filterDate(storm){
     const date = new Date(storm.starttime);           
@@ -55,6 +57,8 @@ d3.select('button').on('click', function () {
     let filteredWeather = filterJson(weatherJson);
     console.log(filteredWeather);
     createMarkers(filteredWeather);
+    getDates(filteredWeather);
+    plotHist();
 })
 
 function filterJson(json){//,latS,latN,lonE,lonW){
@@ -73,11 +77,15 @@ function run(dataset) {
     createLegend(myMap);
 
     calcStats(weatherJson);
+    getDates(weatherJson);
+    plotHist();
     console.log(summaryStats);
     //let negative = weatherJson.filter(storm => storm.duration < 0);
     //let nDate = new Date(negative[0].endtime);
     //let sDate = negative[0].starttime;
-    console.log(stormCounts);
+    console.log(dateArray);
+    console.log(plotDates);
+    console.log(plotValues);
 
 };
 // ************************ Code for Leaflet Map ****************************
@@ -293,4 +301,36 @@ function calcStats(weatherData){
     summaryStats['nMean'] = d3.mean(stormCounts);
     summaryStats['nMedian'] = d3.median(stormCounts);
     summaryStats['nStd'] = d3.deviation(stormCounts);
+}
+
+
+//var plotDates;
+//var plotValues;
+//getDates(weatherJson);
+function getDates(weatherData){
+    dateArray = {};
+    for(let i =0; i < weatherData.length; i++){
+        let date = weatherData[i].starttime;
+        let dateYM = date.substring(0,7);
+        if(dateArray[dateYM] == null){
+            dateArray[dateYM] = 1;
+        }else{
+            dateArray[dateYM] += 1;
+        }
+    }
+    plotDates = Object.keys(dateArray).sort();
+    plotValues = [];
+    for(let i=0; i < plotDates.length; i++){
+        console.log()
+        plotValues.push(dateArray[plotDates[i]]);
+    }
+}
+
+function plotHist(){
+    let trace = [{
+        x: plotDates,
+        y: plotValues,
+        type: 'bar'
+    }]
+    Plotly.newPlot("histogram",trace)
 }
