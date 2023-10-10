@@ -209,7 +209,7 @@ function createFeature(apData) {
             weight: 3.0,
             //adjust radius
             radius: getRadius(avgDuration)
-        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Zipcode: ${zip}</p>`).addTo(markerGroup);
+        }).bindPopup(`<h3>Airport ID: ${apID}</h3><hr><p>Location: ${location}</p><p># of Storms: ${numStorms}</p><p>City: ${city}</p><p>State: ${state}</p><p>Mean Duration: ${avgDuration / 60000}</p>`).addTo(markerGroup);
     };
     myMap.addLayer(markerGroup);
 }
